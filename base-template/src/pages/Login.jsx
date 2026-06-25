@@ -1,14 +1,31 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../supabase.js";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // handle login submission here
+    setLoading(true);
     console.log("Login submitted", { email, password });
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.error("Error during login:", error.message);
+      alert("Login failed: " + error.message);
+    } else {
+      console.log("Login successful");
+      navigate("/");
+    }
+    setLoading(false);
   };
 
   return (
@@ -37,8 +54,12 @@ export default function Login() {
             style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
           />
         </div>
-        <button type="submit" style={{ padding: "0.75rem 1rem" }}>
-          Login
+        <button
+          type="submit"
+          disabled={loading}
+          style={{ padding: "0.75rem 1rem" }}
+        >
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
       <p style={{ marginTop: "1rem" }}>
