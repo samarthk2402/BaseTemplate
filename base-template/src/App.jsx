@@ -5,6 +5,7 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import Project from "./pages/Project.jsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/project/:projectID" element={<Project />} />
     </Routes>
   );
 }

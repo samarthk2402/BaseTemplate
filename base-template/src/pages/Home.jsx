@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase.js";
+import { Link } from "react-router-dom";
 import NewProject from "../components/NewProject";
 import JoinProject from "../components/JoinProject";
 
@@ -62,10 +63,15 @@ export default function Home() {
           <div className="projects-grid">
             {projects.length > 0 ? (
               projects.map((project) => (
-                <div key={project.id}>
+                <Link
+                  to={`/project/${project.id}`}
+                  key={project.id}
+                  className="project-card"
+                  style={{ textDecoration: "none", color: "inherit" }} // Optional: keeps your styling intact
+                >
                   <h2>{project.title}</h2>
                   <h3>Join Code: {project.join_code}</h3>
-                </div>
+                </Link>
               ))
             ) : (
               <p>No projects found.</p>

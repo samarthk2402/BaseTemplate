@@ -176,3 +176,92 @@ button[type="submit"]:disabled {
   cursor: not-allowed;
   transform: none;
 }
+/* Kanban Board Grid Layout */
+/* Kanban Board Grid Layout */
+.kanban-container {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-top: 32px;
+  width: 100%; /* Take up all available space */
+  box-sizing: border-box;
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.kanban-column {
+  flex: 1;
+  min-width: 0; /* Prevents columns from exploding past their flex shares */
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 20px;
+
+  /* Force columns to stretch down uniformly */
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-column h2 {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  padding-left: 4px;
+}
+
+/* Drop-zone Area styles */
+.task-list-zone {
+  min-height: 450px; /* Controls how long the columns look when empty */
+  height: 100%;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-list-zone.dragging-over {
+  background-color: rgba(
+    59,
+    130,
+    246,
+    0.05
+  ); /* Faint blue tint when hovering a card */
+}
+
+/* Draggable Cards */
+.task-card {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  padding: 14px;
+  border-radius: 8px;
+  cursor: grab;
+  transition: box-shadow 0.15s ease;
+}
+
+.task-card:active {
+  cursor: grabbing;
+}
+
+.task-card.dragging {
+  border-color: var(--accent-color);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.task-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.task-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
