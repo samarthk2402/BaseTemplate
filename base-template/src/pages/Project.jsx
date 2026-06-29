@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../supabase.js";
 import KanbanBoard from "../components/KanbanBoard.jsx";
+import NewTask from "../components/NewTask.jsx";
 
 export default function Project() {
   const { projectID } = useParams();
@@ -38,6 +39,7 @@ export default function Project() {
   return (
     <div>
       <h1>{title}</h1>
+      <NewTask projectID={projectID} />
       <KanbanBoard projectID={projectID} />
     </div>
   );
