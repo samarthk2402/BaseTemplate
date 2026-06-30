@@ -19,6 +19,35 @@ export default function KanbanBoard({ projectID }) {
     };
     console.log("Fetching tasks for project ID:", projectID);
     if (projectID) fetchTasks();
+
+    const channels = supabase
+      .channel(`public:tasks:project_${projectID}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "tasks",
+          filter: "project_id=eq." + projectID,
+        },
+        (payload) => {
+          console.log("Change received!", payload);
+          if (payload.eventType === "INSERT") {
+            setTasks((prev) => [...prev, payload.new]);
+          } else if (payload.eventType === "UPDATE") {
+            setTasks((prev) =>
+              prev.map((task) =>
+                task.id === payload.new.id ? payload.new : task,
+              ),
+            );
+          }
+        },
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channels);
+    };
   }, [projectID]);
 
   // 2. This function runs the moment a user stops dragging a card

@@ -37,7 +37,7 @@ export default function Project() {
   if (!title) return <div>Project not found</div>;
 
   return (
-    <div>
+    <div className="project-workspace-container">
       <h1>{title}</h1>
       <NewTask projectID={projectID} />
       <KanbanBoard projectID={projectID} />

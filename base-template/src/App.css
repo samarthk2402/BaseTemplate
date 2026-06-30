@@ -14,19 +14,20 @@
 
 body {
   margin: 0;
-  padding: 0;
+  padding: 100px;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Layout Wrapper Container */
+/* Layout Wrapper Container - Fixed Wildcard Selector Trap */
 .home-container,
-div > div {
-  max-width: 800px;
+.project-workspace-container {
+  max-width: 1200px;
   margin: 40px auto;
   padding: 0 24px;
+  box-sizing: border-box;
 }
 
 /* Headings */
@@ -36,6 +37,7 @@ h1 {
   letter-spacing: -0.025em;
   margin-bottom: 32px;
   background: linear-gradient(to right, #ffffff, #9ca3af);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -133,7 +135,7 @@ input[type="text"] {
   border-radius: 8px;
   outline: none;
   transition: border-color 0.15s ease-in-out;
-  flex-grow: 1; /* Allows inner input box to expand gracefully inside inline views */
+  flex-grow: 1;
   max-width: 300px;
 }
 
@@ -176,34 +178,31 @@ button[type="submit"]:disabled {
   cursor: not-allowed;
   transform: none;
 }
-/* Kanban Board Grid Layout */
-/* Kanban Board Grid Layout */
+
+/* Kanban Board Layout Engine */
 .kanban-container {
   display: flex;
   gap: 24px;
   align-items: flex-start;
   margin-top: 32px;
-  width: 100%; /* Take up all available space */
+  width: 100%;
   box-sizing: border-box;
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
+  /* Hide scrollbars */
   &::-webkit-scrollbar {
     display: none;
   }
-  /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 .kanban-column {
   flex: 1;
-  min-width: 0; /* Prevents columns from exploding past their flex shares */
+  min-width: 0;
   background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   padding: 20px;
-
-  /* Force columns to stretch down uniformly */
   display: flex;
   flex-direction: column;
 }
@@ -217,32 +216,48 @@ button[type="submit"]:disabled {
 
 /* Drop-zone Area styles */
 .task-list-zone {
-  min-height: 450px; /* Controls how long the columns look when empty */
+  min-height: 450px;
   height: 100%;
   border-radius: 8px;
   transition: background-color 0.2s ease;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+
+  /* Ensures everything lines up down the exact middle horizontal line */
+  align-items: center;
 }
 
 .task-list-zone.dragging-over {
-  background-color: rgba(
-    59,
-    130,
-    246,
-    0.05
-  ); /* Faint blue tint when hovering a card */
+  background-color: rgba(59, 130, 246, 0.03);
 }
 
-/* Draggable Cards */
+/* Bigger, Fluid Adjustable Cards */
 .task-card {
   background-color: var(--bg-input);
   border: 1px solid var(--border-color);
-  padding: 14px;
-  border-radius: 8px;
+  padding: 18px 24px; /* Increased padded size */
+  border-radius: 10px;
   cursor: grab;
-  transition: box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  /* Takes up 90% of column width while remaining perfectly centered */
+  width: 90%;
+  box-sizing: border-box;
+
+  /* Dynamic height properties to match content length */
+  height: auto;
+  min-height: 70px;
+
+  /* Content formatting */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .task-card:active {
@@ -255,13 +270,16 @@ button[type="submit"]:disabled {
 }
 
 .task-card h4 {
-  margin: 0 0 6px 0;
-  font-size: 0.95rem;
+  margin: 0;
+  font-size: 1rem;
   font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
 }
 
 .task-card p {
-  margin: 0;
-  font-size: 0.8rem;
+  margin: 6px 0 0 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
   color: var(--text-secondary);
 }
