@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { supabase } from "../supabase.js";
 
-const COLUMNS = ["To Do", "In Progress", "Done"];
+const COLUMNS = [
+  { status: "To Do", className: "kanban-column--todo" },
+  { status: "In Progress", className: "kanban-column--progress" },
+  { status: "Done", className: "kanban-column--done" },
+];
 
 export default function KanbanBoard({ projectID }) {
   const [tasks, setTasks] = useState([]);
@@ -87,16 +91,18 @@ export default function KanbanBoard({ projectID }) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="kanban-container">
-        {COLUMNS.map((columnStatus) => {
-          // Filter tasks belonging to this specific column
-          const columnTasks = tasks.filter((t) => t.status === columnStatus);
+        {COLUMNS.map(({ status, className }) => {
+          const columnTasks = tasks.filter((t) => t.status === status);
 
           return (
-            <div key={columnStatus} className="kanban-column">
-              <h2>{columnStatus}</h2>
+            <div key={status} className={`kanban-column ${className}`}>
+              <div className="kanban-column-header">
+                <span className="kanban-column-dot" />
+                <h2>{status}</h2>
+                <span className="kanban-column-count">{columnTasks.length}</span>
+              </div>
 
-              {/* Droppable wrapper for the column list */}
-              <Droppable droppableId={columnStatus}>
+              <Droppable droppableId={status}>
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}

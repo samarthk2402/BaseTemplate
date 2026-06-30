@@ -30,42 +30,38 @@ export default function Register() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "0 auto", padding: "2rem" }}>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "1rem" }}>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
-          />
-        </div>
-        <div style={{ marginBottom: "1rem" }}>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          style={{ padding: "0.75rem 1rem" }}
-        >
-          {loading ? "Registering..." : "Register"}
-        </button>
-      </form>
-      <p style={{ marginTop: "1rem" }}>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1>Create account</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
+        </form>
+        <p className="auth-footer">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
   );
 }

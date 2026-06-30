@@ -54,10 +54,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="home-container">
+      <div className="page-header">
+        <h1>Your Projects</h1>
+      </div>
       {loading ? (
-        <p>Loading...</p>
+        <p className="loading-text">Loading...</p>
       ) : (
         <>
           <div className="projects-grid">
@@ -67,14 +69,13 @@ export default function Home() {
                   to={`/project/${project.id}`}
                   key={project.id}
                   className="project-card"
-                  style={{ textDecoration: "none", color: "inherit" }} // Optional: keeps your styling intact
                 >
                   <h2>{project.title}</h2>
                   <h3>Join Code: {project.join_code}</h3>
                 </Link>
               ))
             ) : (
-              <p>No projects found.</p>
+              <p className="empty-state">No projects yet — create or join one below.</p>
             )}
           </div>
           <NewProject

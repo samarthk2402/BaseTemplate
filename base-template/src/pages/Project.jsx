@@ -32,13 +32,30 @@ export default function Project() {
     fetchTitle();
   }, [projectID]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!title) return <div>Project not found</div>;
+  if (loading)
+    return (
+      <div className="project-workspace-container">
+        <p className="loading-text">Loading...</p>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="project-workspace-container">
+        <p>Error: {error}</p>
+      </div>
+    );
+  if (!title)
+    return (
+      <div className="project-workspace-container">
+        <p>Project not found</p>
+      </div>
+    );
 
   return (
     <div className="project-workspace-container">
-      <h1>{title}</h1>
+      <div className="page-header">
+        <h1>{title}</h1>
+      </div>
       <NewTask projectID={projectID} />
       <KanbanBoard projectID={projectID} />
     </div>
